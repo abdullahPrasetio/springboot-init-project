@@ -2,10 +2,14 @@ package com.github.abdullahprasetio.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.abdullahprasetio.helpers.response.CustomResponse;
+import com.github.abdullahprasetio.helpers.response.ResponseSuccess;
 import com.github.abdullahprasetio.models.entities.Product;
 import com.github.abdullahprasetio.services.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +34,7 @@ public class ProductController {
     }
 
     @GetMapping()
+    // @MyResponse
     public Iterable<Product> findAll(@RequestParam(required = false) String name
     // ,@RequestParam(required = false) String desc
     ) {
@@ -40,6 +45,22 @@ public class ProductController {
         }
         return productService.findAll();
     }
+
+    // @GetMapping()
+    // public ResponseEntity<CustomResponse> findAll(@RequestParam(required = false)
+    // String name
+    // // ,@RequestParam(required = false) String desc
+    // ) {
+    // System.out.println("Name : " + name);
+    // // System.out.println("Desc : " + desc);
+    // var data = (name != null) ? productService.findByName(name) :
+    // productService.findAll();
+    // // var res = new ResponseSuccess("Success", data);
+    // // return res.send();
+    // HttpHeaders headers = new HttpHeaders();
+    // headers.add("X-DEVICE-ID", "laksdlasdklasd");
+    // return new ResponseSuccess("Success", data).setHeaders(headers).send();
+    // }
 
     @GetMapping("/{id}")
     public Product findOne(@PathVariable("id") Long id) {
