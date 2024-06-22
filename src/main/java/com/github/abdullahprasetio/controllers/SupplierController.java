@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.abdullahprasetio.dto.ResponseData;
+import com.github.abdullahprasetio.dto.SearchDto;
 import com.github.abdullahprasetio.dto.SupplierDto;
 import com.github.abdullahprasetio.models.entities.Supplier;
 import com.github.abdullahprasetio.services.SupplierService;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/suppliers")
@@ -94,6 +95,26 @@ public class SupplierController {
         responseData.setStatus(true);
         responseData.setPayload(supplierService.save(supplier));
         return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping("/search/byemail")
+    public Supplier findByEmail(@RequestBody SearchDto searchDto) {
+        return supplierService.findByEmail(searchDto.getSearchKey());
+    }
+
+    @PostMapping("/search/byname")
+    public List<Supplier> findByName(@RequestBody SearchDto searchDto) {
+        return supplierService.findByName(searchDto.getSearchKey());
+    }
+
+    @PostMapping("/search/namestartwith")
+    public List<Supplier> findByNameStartWith(@RequestBody SearchDto searchDto) {
+        return supplierService.findByNameStartWith(searchDto.getSearchKey());
+    }
+
+    @PostMapping("/search/nameoremail")
+    public List<Supplier> findByNameOrEmail(@RequestBody SearchDto searchDto) {
+        return supplierService.findByNameOrEmailContains(searchDto.getSearchKey(),searchDto.getOtherSearchKey());
     }
     
 }

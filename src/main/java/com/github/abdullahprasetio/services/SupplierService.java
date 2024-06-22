@@ -1,5 +1,7 @@
 package com.github.abdullahprasetio.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +35,21 @@ public class SupplierService {
 
     public void removeOne(Long id) {
         this.supplierRepo.deleteById(id);
+    }
+
+    public Supplier findByEmail(String email) {
+        return this.supplierRepo.findByEmail(email);
+    }
+
+    public List<Supplier> findByName(String name) {
+        return this.supplierRepo.findByNameContainsOrderByIdDesc(name);
+    }
+
+    public List<Supplier> findByNameStartWith(String prefix) {
+        return this.supplierRepo.findByNameStartingWith(prefix);
+    }
+
+    public List<Supplier> findByNameOrEmailContains(String name, String email) {
+        return this.supplierRepo.findByNameContainsOrEmailContains(name,email);
     }
 }
