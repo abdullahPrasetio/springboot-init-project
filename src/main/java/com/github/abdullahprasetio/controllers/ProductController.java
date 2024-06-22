@@ -6,6 +6,7 @@ import com.github.abdullahprasetio.dto.ResponseData;
 import com.github.abdullahprasetio.helpers.response.CustomResponse;
 import com.github.abdullahprasetio.helpers.response.ResponseSuccess;
 import com.github.abdullahprasetio.models.entities.Product;
+import com.github.abdullahprasetio.models.entities.Supplier;
 import com.github.abdullahprasetio.services.ProductService;
 
 import jakarta.validation.Valid;
@@ -106,6 +107,12 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void removeOne(@PathVariable("id") Long id) {
         productService.removeOne(id);
+    }
+
+    @PostMapping("/{id}")
+    public void addSupplier(@RequestBody Supplier supplier, @PathVariable("id") Long productId){
+        // productService.addSupplier(supplier, productId);
+        productService.addSupplier(supplier, productId);
     }
 
 }

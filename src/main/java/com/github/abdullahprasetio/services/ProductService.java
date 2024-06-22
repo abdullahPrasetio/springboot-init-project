@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.abdullahprasetio.models.entities.Product;
+import com.github.abdullahprasetio.models.entities.Supplier;
 import com.github.abdullahprasetio.models.repos.ProductRepo;
 
 import jakarta.transaction.Transactional;
@@ -40,6 +41,15 @@ public class ProductService {
 
     public Iterable<Product> findByName(String name) {
         return productRepo.findByNameContains(name);
+    }
+
+    public void addSupplier(Supplier supplier, Long productId) {
+        Product product = findOne(productId);
+        if (product == null) {
+            throw new RuntimeException("Product with id " + productId + " not found");
+        }
+        product.getSuppliers().add(supplier);
+        save(product);
     }
 
 }
