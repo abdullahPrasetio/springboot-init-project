@@ -1,5 +1,6 @@
 package com.github.abdullahprasetio.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepo productRepo;
+
+    @Autowired
+    private SupplierService supplierService;
 
     public Product save(Product product) {
         return this.productRepo.save(product);
@@ -52,4 +56,25 @@ public class ProductService {
         save(product);
     }
 
+
+    public Product findByProductName(String name) {
+        return productRepo.findByName(name);
+    }
+
+    public List<Product> findByProductNameLike(String name) {
+        return productRepo.findByNameLike("%"+name+"%");
+    }
+
+    public List<Product> findByProductCategory(Long id) {
+        return productRepo.findByCategoryId(id);
+    }
+
+    public List<Product> findBySupplier(Long supplierId) {
+        Supplier supplier = supplierService.findOne(supplierId);
+        if (supplier == null) {
+            return new ArrayList<Product>();
+        }
+        return productRepo.findBySupplier(supplier);
+    }
+    
 }

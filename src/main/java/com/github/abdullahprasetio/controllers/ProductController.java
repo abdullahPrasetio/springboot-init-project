@@ -3,6 +3,7 @@ package com.github.abdullahprasetio.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.abdullahprasetio.dto.ResponseData;
+import com.github.abdullahprasetio.dto.SearchDto;
 import com.github.abdullahprasetio.helpers.response.CustomResponse;
 import com.github.abdullahprasetio.helpers.response.ResponseSuccess;
 import com.github.abdullahprasetio.models.entities.Product;
@@ -10,6 +11,8 @@ import com.github.abdullahprasetio.models.entities.Supplier;
 import com.github.abdullahprasetio.services.ProductService;
 
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -113,6 +116,26 @@ public class ProductController {
     public void addSupplier(@RequestBody Supplier supplier, @PathVariable("id") Long productId){
         // productService.addSupplier(supplier, productId);
         productService.addSupplier(supplier, productId);
+    }
+
+    @PostMapping("/search/name")
+    public Product findByProductName(@RequestBody SearchDto searchDto) {
+        return productService.findByProductName(searchDto.getSearchKey());
+    }
+
+    @PostMapping("/search/namelike")
+    public List<Product> findByProductNameLike(@RequestBody SearchDto searchDto) {
+        return productService.findByProductNameLike(searchDto.getSearchKey());
+    }
+
+    @GetMapping("/search/category/{categoryId}")
+    public List<Product> getProductByCategory(@PathVariable("categoryId") Long categoryId) {
+        return productService.findByProductCategory(categoryId);
+    }
+    
+    @GetMapping("/search/supplier/{supplierId}")
+    public List<Product> getProductBySupplier(@PathVariable("supplierId") Long supplierId) {
+        return productService.findBySupplier(supplierId);
     }
 
 }

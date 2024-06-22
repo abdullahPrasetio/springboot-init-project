@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
@@ -20,7 +21,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "tbl_product")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,7 +48,7 @@ public class Product implements Serializable {
         name = "tbl_product_supplier", 
         joinColumns = @JoinColumn(name = "product_id"), 
         inverseJoinColumns = @JoinColumn(name = "supplier_id")) // ini untuk pivot nya
-    // @JsonManagedReference
+    @JsonManagedReference
     private Set<Supplier> suppliers;
 
     public Product() {
