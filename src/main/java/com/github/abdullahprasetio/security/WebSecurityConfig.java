@@ -34,8 +34,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf->csrf.disable());
         http.authorizeHttpRequests(
-            auth->auth.requestMatchers("/error/**","/api/users/register").permitAll()
-        .requestMatchers("v3/api-docs/**","/api/test/**","swagger-ui/**").permitAll().anyRequest().fullyAuthenticated());
+            auth->auth.requestMatchers("/api/users/register").permitAll()
+        .requestMatchers("v3/api-docs/**","/api/test/**","swagger-ui/**","/upload/**").permitAll().anyRequest().fullyAuthenticated());
         http.httpBasic(Customizer.withDefaults());
         // http....;
         
